@@ -22,7 +22,7 @@
 
             <form action = "<?php $_PHP_SELF ?>" method = "POST" id="main-form" style="overflow: auto;max-height: 98vh;">
                 <label for="age">Age:</label>
-                <input type="text" class="form-control" placeholder=""  id="age" name="age">
+                <input type="text" class="form-control" placeholder="" id="age" name="age">
                 <br>
 
                 <label for="sex">Sex:</label>
@@ -79,8 +79,8 @@
                     <input type="text" class="form-control" placeholder="" id="stDepression" name="stDepression">
                 <br>
 
-                <label for="eia">Peak Exercise ST Segment:</label>
-                <select class="btn btn-default btn-block" id="eia" name="eia">
+                <label for="peakExercise">Peak Exercise ST Segment:</label>
+                <select class="btn btn-default btn-block" id="peakExercise" name="peakExercise">
                     <option value="1">Upsloping</option>
                     <option value="2">Flat</option>
                     <option value="3">Downsloping</option>
