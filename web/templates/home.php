@@ -1,164 +1,246 @@
-<!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cebøng - Heart Disease Predictor</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- CSS Form -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/style.css" />
-    <title>Cebong</title>
-     <!-- Sidebar & Content Style                                                   -->
-     <!-- Source: https://bootstrapious.com/p/bootstrap-sidebar                     -->
-     
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link href='static/custom.css' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- Sidebar Holder -->
-        <nav id="sidebar">
-            <!-- Sidebar Form -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2 py-5">
 
-            <form action = "<?php $_PHP_SELF ?>" method = "POST" id="main-form" style="overflow: auto;max-height: 98vh;">
-                <label for="age">Age:</label>
-                <input type="text" class="form-control" placeholder="" id="age" name="age">
-                <br>
+                <h1>Cebøng</h1>
+                <p class="lead">Curious that you have heart disease or not? Just check it!</p>
 
-                <label for="sex">Sex:</label>
-                <select class="btn btn-default btn-block" id="sex" name="sex">
-                    <option value="1">Male</option>
-                    <option value="0">Female</option>
-                </select>
-                <br>
+                <div class="predictionPopUp">
+                    <div>
+                        <div class="popupCloseButton">X</div>
+                        <p id="contentPrediction">
+                            <?php
+                                ini_set('max_execution_time', 600);
+                                $url = 'http://127.0.0.1:5000/';
+                                $ch = curl_init($url);
+                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                                curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
+                                $response = curl_exec($ch);
+                                curl_close($ch);
 
-                <label for="chest">Chest Pain:</label>
-                <select class="btn btn-default btn-block" id="chest" name="chest">
-                    <option value="1">Typical angina</option>
-                    <option value="2">Atypical angina</option>
-                    <option value="3">Non-angina</option>
-                    <option value="4">Asymptotic</option>
-                </select>
-                <br>
-
-                <label for="bloodPressure">Blood Pressure:</label>
-                <input type="text" class="form-control" placeholder="mmHg" id="bloodPressure" name="bloodPressure">
-                <br>
-
-                <label for="cholestrol">Cholestrol:</label>
-                <input type="text" class="form-control" placeholder="mg/dl" id="cholestrol" name="cholestrol">
-                <br>
-    
-                <label for="bloodSugar">Blood Sugar > 120mg/dl:</label>
-                <select class="btn btn-default btn-block" id="bloodSugar" name="bloodSugar">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-                <br>
-
-                <label for="ecg">Resting ECG:</label>
-                <select class="btn btn-default btn-block" id="ecg" name="ecg">
-                    <option value="0">Normal</option>
-                    <option value="1">ST-T wave abnormality</option>
-                    <option value="2">Left Ventricular Hyperthrophy</option>
-                </select>
-                <br>
-
-                <label for="heartRate">Max Heart Rate:</label>
-                <input type="text" class="form-control" placeholder="" id="heartRate" name="heartRate">
-                <br>
-                
-                <label for="eia">Exercise Induced Angina:</label>
-                <select class="btn btn-default btn-block" id="eia" name="eia">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-                <br>
-
-                <label for="stDepression">ST depression relative to rest:</label>
-                    <input type="text" class="form-control" placeholder="" id="stDepression" name="stDepression">
-                <br>
-
-                <label for="peakExercise">Peak Exercise ST Segment:</label>
-                <select class="btn btn-default btn-block" id="peakExercise" name="peakExercise">
-                    <option value="1">Upsloping</option>
-                    <option value="2">Flat</option>
-                    <option value="3">Downsloping</option>
-                </select>
-                <br>
-
-                <label for="vessles">Number of Major Vessels:</label>
-                <select class="btn btn-default btn-block" id="vessles" name="vessles">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <br>
-
-                <label for="thal">Thal:</label>
-                <select class="btn btn-default btn-block" id="thal" name="thal">
-                    <option value="3">Normal</option>
-                    <option value="6">Fixed Defect</option>
-                    <option value="7">Reversable Defect</option>
-                </select>
-                <br>
-
-                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 5%">Submit</button>
-            </form>
-        </nav>
-
-        <!-- Page Content Holder -->
-        <div id="content">
-
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-
-                    <div class="navbar-header">
-                        <button type="button" id="sidebarCollapse" class="navbar-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
+                                $response = json_decode($response);
+                                echo $response;
+                            ?>
+                        </p>
                     </div>
-                    
-                    <h1 class="text-center">
-                        <img class="rounded" src="static/content.jpg"></a>
-                    </h1>                
                 </div>
-            </nav>
-    
-            <?php
-                ini_set('max_execution_time', 600);
-                $url = 'http://127.0.0.1:5000/';
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
-                $response = curl_exec($ch);
-                curl_close($ch);
 
-                $response = json_decode($response); 
-                echo $response;
-            ?>
+                <form id="main-form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" role="form">
+                    <div class="controls">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <input id="age" type="text" name="age" class="form-control" placeholder="Please enter your age" required="required" data-error="Age is required.">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="form_sex">Sex</label>
+                                    <div class="form-control border-0" id="sex" data-error="Sex is required.">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="sex_male" type="radio" name="sex" value="1">
+                                            <label class="form-check-label" for="sex_male">Male</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="sex_female" type="radio" name="sex" value="0">
+                                            <label class="form-check-label" for="sex_female">Female</label>
+                                        </div>
+                                    </div>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="chest">Chest-Pain Type</label>
+                                    <select id="chest" name="chest" class="form-control" required="required" data-error="Please specify your Chest-Paint Type.">
+                                        <option value=""></option>
+                                        <option value="1">Typical Angina</option>
+                                        <option value="2">Atypical Angina</option>
+                                        <option value="3">Non-Anginal Pain</option>
+                                        <option value="4">Asymptotic</option>
+                                    </select>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bloodPressure">Resting Blood Pressure (mmHg)</label>
+                                    <input id="bloodPressure" type="text" name="bloodPressure" class="form-control" placeholder="Please enter your Resting Blood Pressure" required="required" data-error="Resting Blood Pressure is required.">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cholestrol">Serum Cholestrol (mg/dl)</label>
+                                    <input id="cholestrol" type="text" name="cholestrol" class="form-control" placeholder="Please enter your Serum Cholestrol" required="required" data-error="Serum Cholestrol is required.">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bloodSugar">Is your Fasting Blood Sugar > 120 mg/dl?</label>
+                                    <div class="form-control border-0" id="bloodSugar" data-error="Fasting Blood Sugar is required.">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="bloodSugar_true" type="radio" name="bloodSugar" value="1">
+                                            <label class="form-check-label" for="bloodSugar_true">True</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="bloodSugar_false" type="radio" name="bloodSugar" value="0">
+                                            <label class="form-check-label" for="bloodSugar_false">False</label>
+                                        </div>
+                                    </div>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ecg">Resting ECG</label>
+                                    <select id="ecg" name="ecg" class="form-control" required="required" data-error="Please specify your Resting ECG.">
+                                        <option value=""></option>
+                                        <option value="3">Normal</option>
+                                        <option value="6">Fixed Defect</option>
+                                        <option value="7">Reversable Defect</option>
+                                    </select>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="heartRate">Max-Heart Rate Achieved</label>
+                                    <input id="heartRate" type="text" name="heartRate" class="form-control" placeholder="Please enter your Max-Heart Rate Achieved" required="required" data-error="Max-Heart Rate Achieved is required.">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="thal">Thal</label>
+                                    <select id="thal" name="thal" class="form-control" required="required" data-error="Please specify your Thal.">
+                                        <option value=""></option>
+                                        <option value="0">Normal</option>
+                                        <option value="1">Having ST-T wave abnomality</option>
+                                        <option value="2">Left Ventricular Hyperthrophy</option>
+                                    </select>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="eia">Exercise Induced Angina</label>
+                                    <div class="form-control border-0" id="eia" data-error="Exercise Induced Angina is required.">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="eia_yes" type="radio" name="eia" value="1">
+                                            <label class="form-check-label" for="eia_yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="eia_no" type="radio" name="eia" value="0">
+                                            <label class="form-check-label" for="eia_no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="peakExercise">Peak Exercise ST Segment</label>
+                                    <select id="peakExercise" name="peakExercise" class="form-control" required="required" data-error="Please specify your Peak Exercise ST Segment.">
+                                        <option value=""></option>
+                                        <option value="1">Upsloping</option>
+                                        <option value="2">Flat</option>
+                                        <option value="3">Downsloping</option>
+                                    </select>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="vessles">Number of Major Vessels Colored by Flourosopy</label>
+                                    <div class="form-control border-0" id="vessles" data-error="Number of Major Vessels Colored by Flourosopy is required.">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="vessles_0" type="radio" name="vessles" value="0">
+                                            <label class="form-check-label" for="vessles_0">0</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="vessles_1" type="radio" name="vessles" value="1">
+                                            <label class="form-check-label" for="vessles_1">1</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="vessles_2" type="radio" name="vessles" value="2">
+                                            <label class="form-check-label" for="vessles_2">2</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="vessles_3" type="radio" name="vessles" value="3">
+                                            <label class="form-check-label" for="vessles_3">3</label>
+                                        </div>
+                                    </div>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="stDepression">ST Depression Induced by Exercise Relative to Rest</label>
+                                    <input id="stDepression" type="text" name="stDepression" class="form-control" placeholder="Please enter your ST Depression Induced by Exercise Relative to Rest" required="required" data-error="ST Depression Induced by Exercise Relative to Rest is required.">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-success btn-predict" value="Predict">
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="text-muted">*Hover on the text to know what that is.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#sidebar").mCustomScrollbar({
-                theme: "minimal"
-            });
-        
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar, #content').toggleClass('active');
-                $('.collapse.in').toggleClass('in');
-                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                $(this).toggleClass('active');
-            });
-        });
+    <script>
     </script>
+
 </body>
 </html>
