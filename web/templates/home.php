@@ -1,13 +1,12 @@
 <html>
 
 <head>
-    <title>Cebøng - Heart Disease Predictor</title>
+    <title>Cebøng Heart Disease Predictor</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-    <link href='static/custom.css' rel='stylesheet' type='text/css'>
+    <link href='custom.css' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -20,7 +19,7 @@
 
                 <div class="predictionPopUp">
                     <div>
-                        <div class="popupCloseButton">X</div>
+                        <!-- <div class="popupCloseButton">X</div> -->
                         <p id="contentPrediction">
                             <?php
                                 ini_set('max_execution_time', 600);
@@ -38,7 +37,7 @@
                     </div>
                 </div>
 
-                <form id="main-form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" role="form">
+                <form id="patient-data-form" method="post" action="<?php $_PHP_SELF ?>">
                     <div class="controls">
                         <div class="row">
                             <div class="col-md-6">
@@ -51,8 +50,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="form_sex">Sex</label>
-                                    <div class="form-control border-0" id="sex" data-error="Sex is required.">
+                                    <label for="sex">Sex</label>
+                                    <div class="form-control border-0" data-error="Sex is required.">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" id="sex_male" type="radio" name="sex" value="1">
                                             <label class="form-check-label" for="sex_male">Male</label>
@@ -102,8 +101,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="bloodSugar">Is your Fasting Blood Sugar > 120 mg/dl?</label>
-                                    <div class="form-control border-0" id="bloodSugar" data-error="Fasting Blood Sugar is required.">
+                                    <label for="bloodSugar">Is your Fasting Blood Sugar more than 120 mg/dl?</label>
+                                    <div class="form-control border-0" data-error="Fasting Blood Sugar is required.">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" id="bloodSugar_true" type="radio" name="bloodSugar" value="1">
                                             <label class="form-check-label" for="bloodSugar_true">True</label>
@@ -158,7 +157,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="eia">Exercise Induced Angina</label>
-                                    <div class="form-control border-0" id="eia" data-error="Exercise Induced Angina is required.">
+                                    <div class="form-control border-0" data-error="Exercise Induced Angina is required.">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" id="eia_yes" type="radio" name="eia" value="1">
                                             <label class="form-check-label" for="eia_yes">Yes</label>
@@ -189,23 +188,23 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="vessles">Number of Major Vessels Colored by Flourosopy</label>
-                                    <div class="form-control border-0" id="vessles" data-error="Number of Major Vessels Colored by Flourosopy is required.">
+                                    <label for="vessels">Number of Major Vessels Colored by Flourosopy</label>
+                                    <div class="form-control border-0" data-error="Number of Major Vessels Colored by Flourosopy is required.">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="vessles_0" type="radio" name="vessles" value="0">
-                                            <label class="form-check-label" for="vessles_0">0</label>
+                                            <input class="form-check-input" id="vessels_0" type="radio" name="vessels" value="0">
+                                            <label class="form-check-label" for="vessels_0">0</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="vessles_1" type="radio" name="vessles" value="1">
-                                            <label class="form-check-label" for="vessles_1">1</label>
+                                            <input class="form-check-input" id="vessels_1" type="radio" name="vessels" value="1">
+                                            <label class="form-check-label" for="vessels_1">1</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="vessles_2" type="radio" name="vessles" value="2">
-                                            <label class="form-check-label" for="vessles_2">2</label>
+                                            <input class="form-check-input" id="vessels_2" type="radio" name="vessels" value="2">
+                                            <label class="form-check-label" for="vessels_2">2</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="vessles_3" type="radio" name="vessles" value="3">
-                                            <label class="form-check-label" for="vessles_3">3</label>
+                                            <input class="form-check-input" id="vessels_3" type="radio" name="vessels" value="3">
+                                            <label class="form-check-label" for="vessels_3">3</label>
                                         </div>
                                     </div>
                                     <div class="help-block with-errors"></div>
@@ -225,22 +224,12 @@
                             <div class="col-md-12">
                                 <input type="submit" class="btn btn-success btn-predict" value="Predict">
                             </div>
-
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="text-muted">*Hover on the text to know what that is.</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <script>
-    </script>
 
 </body>
 </html>
